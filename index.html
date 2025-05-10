@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Día de las Madres</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #faf3f0;
+      color: #6d6875;
+      text-align: center;
+      margin: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .container {
+      padding: 1rem;
+      max-width: 95%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #d4a5a5;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtitle {
+      color: #a7c4b5;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .garden {
+      position: relative;
+      height: 150px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .tulip {
+      position: absolute;
+      width: 30px;
+      height: 80px;
+      bottom: 20px;
+      opacity: 0;
+      animation: appear 2s ease-in-out forwards, sway 4s ease-in-out infinite alternate;
+      transform-origin: bottom;
+      z-index: 1;
+    }
+
+    .tulip-head {
+      position: absolute;
+      width: 25px;
+      height: 35px;
+      top: 0;
+      left: 2px;
+      border-radius: 50% 50% 40% 40%;
+    }
+
+    .tulip-stem {
+      position: absolute;
+      width: 3px;
+      height: 60px;
+      background-color: #a7c4b5;
+      bottom: 0;
+      left: 13px;
+    }
+
+    @keyframes appear {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes sway {
+      0% { transform: rotate(-5deg); }
+      100% { transform: rotate(5deg); }
+    }
+
+    .petal {
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: 1;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .message-box {
+      background-color: #f8edeb;
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .signature {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 1.3rem;
+      color: #d4a5a5;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background-color: #d4a5a5;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin: 1rem;
+    }
+
+    .heart-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(255, 240, 245, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      display: none;
+    }
+
+    .big-heart {
+      font-size: 5rem;
+      color: #e57373;
+      animation: pulse 1s ease-in-out infinite;
+      position: relative;
+    }
+
+    .heart-message {
+      font-size: 1.5rem;
+      color: #6d6875;
+      margin-top: 1rem;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @media (min-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      .garden { height: 200px; }
+      .tulip { width: 40px; height: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>¡Feliz Día de las Madres!</h1>
+    <p class="subtitle">Te amo mucho</p>
+    <div class="garden" id="garden"></div>
+
+    <div class="message-box">
+      <p>¡¡Feliz día mami!! Te amo mucho y que Dios te bendiga mucho.</p>
+      <p class="signature">- Andy</p>
+    </div>
+
+    <button onclick="showHeart()">Love you</button>
+  </div>
+
+  <div class="heart-overlay" id="heartOverlay">
+    <div class="big-heart">❤️</div>
+    <div class="heart-message">Ly</div>
+  </div>
+
+  <script>
+    const garden = document.getElementById('garden');
+    const tulipColors = ['#f9c1d5', '#d4a5a5', '#e8b4b8', '#d8a3a3', '#f2c6c2', '#d1b3c4', '#b392ac', '#e2b4bd', '#f7d1cd', '#c9a8a9'];
+
+    function createTulip(x) {
+      const tulip = document.createElement('div');
+      tulip.className = 'tulip';
+      tulip.style.left = `${x}px`;
+      tulip.style.animationDelay = `${Math.random() * 2}s`;
+
+      const head = document.createElement('div');
+      head.className = 'tulip-head';
+      head.style.backgroundColor = tulipColors[Math.floor(Math.random() * tulipColors.length)];
+      tulip.appendChild(head);
+
+      const stem = document.createElement('div');
+      stem.className = 'tulip-stem';
+      tulip.appendChild(stem);
+
+      garden.appendChild(tulip);
+    }
+
+    const tulipCount = window.innerWidth < 768 ? 25 : 40;
+    for (let i = 0; i < tulipCount; i++) {
+      const x = Math.random() * (window.innerWidth - 50);
+      createTulip(x);
+    }
+
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.innerHTML = `<svg width="20" height="20" viewBox="0 0 100 100"><path d="M50,0 Q70,30 50,60 Q30,30 50,0 Z" fill="${tulipColors[Math.floor(Math.random() * tulipColors.length)]}" /></svg>`;
+      petal.style.left = `${Math.random() * 100}vw`;
+      petal.style.top = `-20px`;
+      petal.style.animationDuration = `${5 + Math.random() * 10}s`;
+      petal.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 15000);
+    }
+
+    setInterval(createPetal, 500);
+    for (let i = 0; i < 10; i++) {
+      setTimeout(createPetal, i * 300);
+    }
+
+    function showHeart() {
+      const overlay = document.getElementById('heartOverlay');
+      overlay.style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
